@@ -57,7 +57,7 @@ function initializeRequestObj(obj: IRequestOption) {
     if (!obj.data) {
         obj.data = {};
     }
-    
+
     obj.header = obj.header ? obj.header : {};
     if (typeof config.setHeader === 'function') {
         let header = config.setHeader();
@@ -68,9 +68,13 @@ function initializeRequestObj(obj: IRequestOption) {
         obj.header = {...obj.header, ...config.setHeader};
     }
 
-    if (obj.originUrl !== config.codeToSession.url && status.session) {
-        obj.data = { ...obj.data as object, [config.sessionName]: status.session };
+    if (obj.token) {
+      obj.header = { ...obj.header, 'x-auth-token': status.session };
     }
+
+    // if (obj.originUrl !== config.codeToSession.url && status.session) {
+    //     obj.data = { ...obj.data as object };
+    // }
 
     // 如果有全局参数，则添加
     const gd = getGlobalData();
@@ -216,7 +220,16 @@ function request<TResp>(obj: IRequestOption): Promise<TResp> {
         if (obj.cache) {
             cacheManager.get(obj);
         }
-
+        if (obj.token === false) {
+          return doRequest(obj).then((res) => {
+            let response = responseHandler.responseForRequest(res as WechatMiniprogram.RequestSuccessCallbackResult, obj);
+            if (response != null) {
+              return resolve(response);
+            }
+          }).catch((e) => {
+            return catchHandler(e, obj, reject)
+          })
+        }
         sessionManager.main(obj).then(() => {
             return doRequest(obj)
         }).then((res) => {

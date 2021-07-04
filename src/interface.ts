@@ -99,6 +99,7 @@ export interface IRequestOption extends IRequestObject {
     fail?: (res: string | IAnyObject | ArrayBuffer)=> void;
     /** 当使用Promise模式时，开发者是否需要捕获错误（默认不捕获，统一自动处理错误） */
     catchError?: boolean;
+  token?: boolean;
 }
 
 export interface IRequestObject extends WechatMiniprogram.RequestOption{

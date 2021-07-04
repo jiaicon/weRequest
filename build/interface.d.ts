@@ -43,6 +43,7 @@ export interface IRequestOption extends IRequestObject {
     complete?: () => void;
     fail?: (res: string | IAnyObject | ArrayBuffer) => void;
     catchError?: boolean;
+    token?: boolean;
 }
 export interface IRequestObject extends WechatMiniprogram.RequestOption {
     originUrl?: string;

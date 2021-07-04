@@ -100,6 +100,7 @@ function login() {
                         return reject(res);
                     })
                 } else {
+                  console.log('2:');
                     return reject({title: "登录失败", "content": "请稍后重试[code 获取失败]"});
                 }
             },
@@ -108,6 +109,7 @@ function login() {
                 durationReporter.report('wx_login', start, end);
             },
             fail(res) {
+              console.log('1:', res);
                 return reject({title: "登录失败", "content": res.errMsg});
             }
         })
@@ -188,12 +190,14 @@ function code2Session(code: string) {
                         return reject(errorHandler.getErrorMsg(res));
                     }
                 } else {
+                  console.log('4:');
                     return reject({title: "登录失败", "content": "请稍后重试"});
                 }
             },
             complete() {
             },
-            fail: () => {
+            fail: (e) => {
+              console.log('3:', e);
                 return reject({title: "登录失败", "content": "请稍后重试"});
             }
         })
