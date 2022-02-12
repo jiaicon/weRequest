@@ -1,5 +1,5 @@
 <p align="center"><img src="./image/logo.png" alt="weRequest" height="160"/></p>
-<h2 align="center">v1.5.0</h2>
+<h2 align="center">v1.5.2</h2>
 <p align="center"><b>解决繁琐的小程序会话管理，一款自带登录态管理的网络请求组件。</b></p>
 
 
@@ -155,7 +155,7 @@ weRequest.request({
 
 |参数名|类型|必填|默认值|说明|
 | :-------- | :-------| :------ | :------ |:------ |
-|sessionName|String|否|session|储存在localStorage的session名称，且CGI请求的data中会自动带上以此为名称的session值；可不配置，默认为session|
+|sessionName|String|否|session|所有请求会带上以此为key的票据；可不配置，票据名默认为session|
 |urlPerfix|String/Function|否||请求URL的固定前缀，如果配置了，后续请求的URL都会自动加上这个前缀，如果是函数，则为函数的返回值|
 |loginTrigger|Function|是||触发重新登录的条件；参数为CGI返回的数据，返回需要重新登录的条件|
 |codeToSession|Object|是||用code换取session的CGI配置|
@@ -184,7 +184,7 @@ weRequest.request({
 |url|String|是||CGI的url|
 |method|String|否|GET|调用改CGI的方法|
 |codeName|String|否|code|CGI中传参时，存放code的名称|
-|data|Object|否||登录接口需要的其他参数|
+|data|Object/Function|否||登录接口需要的其他参数，当类型是Function时，第一个参数是code|
 |success|Function|是||接口返回成功的函数；需要返回session的值|
 
 ##### reportCGI函数参数说明

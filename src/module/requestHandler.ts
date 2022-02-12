@@ -151,11 +151,7 @@ function doRequest(obj: IRequestOption) {
     }
     return new Promise((resolve, reject) => {
         wx.request({
-            url: obj.url,
-            data: obj.data,
-            method: obj.method,
-            header: obj.header || {},
-            dataType: obj.dataType || 'json',
+            ...obj,
             success(res: WechatMiniprogram.RequestSuccessCallbackResult) {
                 return resolve(res);
             },
@@ -182,10 +178,7 @@ function doUploadFile(obj: IUploadFileOption) {
     }
     return new Promise((resolve, reject) => {
         wx.uploadFile({
-            url: obj.url,
-            filePath: obj.filePath || '',
-            name: obj.name || '',
-            formData: obj.formData,
+            ...obj,
             success(res: WechatMiniprogram.UploadFileSuccessCallbackResult) {
                 return resolve(res);
             },
